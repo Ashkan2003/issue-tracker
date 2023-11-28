@@ -2,6 +2,9 @@
 // npm i classnames //A simple JavaScript utility for conditionally joining classNames together.
 // npm i prisma@5.3.1 // npx prisma init for the first amount
 // npm i zod@3.22.2 for the data-validation
+// npm i @radix-ui/themes // for the beutifull built in components
+import "@radix-ui/themes/styles.css";
+import { Theme } from "@radix-ui/themes";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -22,8 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NavBar />
-        <main>{children}</main>
+        <Theme>
+          <NavBar />
+          <main>{children}</main>
+        </Theme>
       </body>
     </html>
   );

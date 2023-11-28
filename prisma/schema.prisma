@@ -14,7 +14,7 @@ datasource db {
 model Issue {
   // name type
   // @id // this means that this value its an id
-  // @default // this means that this feild can be not-valued and have a default-value
+  // @default // this means that this feild can be not-valued and have the db gives them a data
   // autoincrement() // evry time a new record assien to db this assien s new value
   // @db // this used for assien a native-db-type to this field
   id          Int      @id @default(autoincrement())

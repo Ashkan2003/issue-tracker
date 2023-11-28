@@ -1,6 +1,7 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
+// write npx prisma format to format(prettier) the code
+// write npx prisma migrate dev to create and save chages to db
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,4 +9,24 @@ generator client {
 datasource db {
   provider = "mysql" // the name of the database you use
   url      = env("DATABASE_URL") // we get the url from the env-file-vareables // this url useed to connect the application to db
+}
+
+model Issue {
+  // name type
+  // @id // this means that this value its an id
+  // @default // this means that this feild can be not-valued and have a default-value
+  // autoincrement() // evry time a new record assien to db this assien s new value
+  // @db // this used for assien a native-db-type to this field
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255) // the default prisma-String-type is varchar(155) but we need to store more chars so we set the varchar to 255
+  description String   @db.Text // the default prisma-String-type is varchar(155) but we need to store more chars so we set to text
+  status      Status   @default(OPEN)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt // with @updatedAt evry time an issue gets updated then this field update
+}
+
+enum Status {
+  OPEN
+  IN_PROGRESS
+  CLOSED
 }

@@ -1,0 +1,11 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql" // the name of the database you use
+  url      = env("DATABASE_URL") // we get the url from the env-file-vareables // this url useed to connect the application to db
+}

@@ -1,6 +1,6 @@
 // npm i react-icons
 // npm i classnames //A simple JavaScript utility for conditionally joining classNames together.
-
+// npm i prisma@5.3.1 // npx prisma init for the first amount
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";

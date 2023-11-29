@@ -7,8 +7,8 @@ import prisma from "@/prisma/client";
 
 const createIssueSchema = z.object({
   // this is the schema of validation with zod
-  title: z.string().min(1).max(255),
-  description: z.string().min(1),
+  title: z.string().min(1,"Title is required").max(255), // the second arg is the error-message
+  description: z.string().min(1,"Description is required"),
 });
 
 //mySchema.safeParse("tuna"); // => { success: true; data: "tuna" }
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
 
   if (!validation.success)
     // if the validation.success was false then throw a 400 error in response
-    return NextResponse.json(validation.error.errors, { status: 400 });
+    return NextResponse.json(validation.error.format(), { status: 400 });
 
   //if  the validation.success was true then get the body and des from body and create a new issue-row in db
   const newIssue = await prisma.issue.create({

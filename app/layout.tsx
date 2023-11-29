@@ -4,6 +4,8 @@
 // npm i zod@3.22.2 for the data-validation
 // npm i @radix-ui/themes // for the beutifull built in components
 // npm install --save react-simplemde-editor easymde // this is for the editor
+// npm i react-hook-form@7.46.1
+// npm i axios // to handle http-request
 import "@radix-ui/themes/styles.css";
 import "./theme-config.css";
 import "./globals.css";

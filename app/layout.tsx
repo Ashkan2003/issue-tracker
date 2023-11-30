@@ -6,6 +6,7 @@
 // npm install --save react-simplemde-editor easymde // this is for the editor
 // npm i react-hook-form@7.46.1
 // npm i axios // to handle http-request
+// npm i @hookform/resolvers@3.3.1 // this package allows hookform to integrait with so many data-validation-library like "zod" 
 import "@radix-ui/themes/styles.css";
 import "./theme-config.css";
 import "./globals.css";

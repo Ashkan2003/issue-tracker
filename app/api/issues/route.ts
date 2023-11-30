@@ -2,16 +2,9 @@
 // status:400 // mean bad-request // means that the client send invalid-data
 // status:201 // ok // a new obj was created
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 import prisma from "@/prisma/client";
+import { createIssueSchema } from "../../validationSchemas";
 
-const createIssueSchema = z.object({
-  // this is the schema of validation with zod
-  title: z.string().min(1,"Title is required").max(255), // the second arg is the error-message
-  description: z.string().min(1,"Description is required"),
-});
-
-//mySchema.safeParse("tuna"); // => { success: true; data: "tuna" }
 
 export async function POST(request: NextRequest) {
   const body = await request.json(); // this return a promise so we store-await it in body

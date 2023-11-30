@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createIssueSchema } from "@/app/validationSchemas";
 import { z } from "zod";
 import ErrorMessage from "@/app/components/ErrorMessage";
+import Spinner from "@/app/components/Spinner";
 
 // interface IssueForm {
 //   title: string;
@@ -32,6 +33,7 @@ const NewIssuePage = () => {
   });
 
   const [error, setError] = useState(""); // this error is for server-side validation error
+  const [isSubmitting, setIsSubmitting] = useState(false); // this error is for server-side validation error
   console.log(error);
   return (
     <div className="max-w-xl">
@@ -49,9 +51,11 @@ const NewIssuePage = () => {
           // the data is an obj and its value is the registered inputs.// like {title: 'bug1', description: 'fix it'}
           // with "api-routes" we write a post-api and with axios we sent a post-request to the my-sql and post(create) the data(title,des) in the db
           try {
+            setIsSubmitting(true);
             await axios.post("/api/issues", data); // see the POST-methid in the api/issues/route.ts file
             router.push("/issues");
           } catch (error) {
+            setIsSubmitting(false);
             // this error is for server-side validation errors
             console.log(error, "dd");
             setError("An unexpected error occured");
@@ -75,7 +79,9 @@ const NewIssuePage = () => {
 
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
 
-        <Button>Submit New Issue</Button>
+        <Button disabled={isSubmitting}>
+          Submit New Issue{isSubmitting && <Spinner />}
+        </Button>
       </form>
     </div>
   );

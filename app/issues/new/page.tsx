@@ -34,7 +34,22 @@ const NewIssuePage = () => {
 
   const [error, setError] = useState(""); // this error is for server-side validation error
   const [isSubmitting, setIsSubmitting] = useState(false); // this error is for server-side validation error
-  console.log(error);
+
+  const onsubmit = handleSubmit(async (data) => {
+    // the data is an obj and its value is the registered inputs.// like {title: 'bug1', description: 'fix it'}
+    // with "api-routes" we write a post-api and with axios we sent a post-request to the my-sql and post(create) the data(title,des) in the db
+    try {
+      setIsSubmitting(true);
+      await axios.post("/api/issues", data); // see the POST-methid in the api/issues/route.ts file
+      router.push("/issues");
+    } catch (error) {
+      setIsSubmitting(false);
+      // this error is for server-side validation errors
+      console.log(error, "dd");
+      setError("An unexpected error occured");
+    }
+  });
+
   return (
     <div className="max-w-xl">
       {error && (
@@ -45,23 +60,7 @@ const NewIssuePage = () => {
           <Callout.Text>{error}</Callout.Text>
         </Callout.Root>
       )}
-      <form
-        className=" space-y-3"
-        onSubmit={handleSubmit(async (data) => {
-          // the data is an obj and its value is the registered inputs.// like {title: 'bug1', description: 'fix it'}
-          // with "api-routes" we write a post-api and with axios we sent a post-request to the my-sql and post(create) the data(title,des) in the db
-          try {
-            setIsSubmitting(true);
-            await axios.post("/api/issues", data); // see the POST-methid in the api/issues/route.ts file
-            router.push("/issues");
-          } catch (error) {
-            setIsSubmitting(false);
-            // this error is for server-side validation errors
-            console.log(error, "dd");
-            setError("An unexpected error occured");
-          }
-        })}
-      >
+      <form className=" space-y-3" onSubmit={onsubmit}>
         <TextField.Root>
           <TextField.Input placeholder="Title" {...register("title")} />
         </TextField.Root>

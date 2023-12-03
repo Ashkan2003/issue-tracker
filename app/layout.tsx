@@ -7,6 +7,8 @@
 // npm i react-hook-form@7.46.1
 // npm i axios // to handle http-request
 // npm i @hookform/resolvers@3.3.1 // this package allows hookform to integrait with so many data-validation-library like "zod" 
+// npm i react-loading-skeleton@3.3.1// this pachage make a beutifull skeleton in the loading-state // this is a common use in real-world applications
+//  npm i delay // this package use is only in development-mode// we use this packege to see a delay in project  
 import "@radix-ui/themes/styles.css";
 import "./theme-config.css";
 import "./globals.css";

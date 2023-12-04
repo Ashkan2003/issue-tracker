@@ -4,7 +4,7 @@ import prisma from "@/prisma/client";
 import IssueStatusBadge from "../components/IssueStatusBadge";
 import delay from "delay";
 import IssueActions from "./IssueActions";
-import Link from "next/link";
+import Link from "../components/Link";
 const IssuesPage = async () => {
   const issues = await prisma.issue.findMany(); // get all the issues from the db// const issues is an array of obj
   await delay(2000);

@@ -1,17 +1,22 @@
 "use client";
-import { Button, Callout, Text, TextField } from "@radix-ui/themes";
-import React, { useState } from "react";
-import SimpleMDE from "react-simplemde-editor"; // this is for the editor
-import "easymde/dist/easymde.min.css"; // this is for the editor
-import { useForm, Controller } from "react-hook-form";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { AiFillInfoCircle } from "react-icons/ai";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { createIssueSchema } from "@/app/validationSchemas";
-import { z } from "zod";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
+import { createIssueSchema } from "@/app/validationSchemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, Callout, TextField } from "@radix-ui/themes";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { AiFillInfoCircle } from "react-icons/ai";
+import { z } from "zod";
+import dynamic from "next/dynamic";
+import "easymde/dist/easymde.min.css"; // this is for the editor
+// import SimpleMDE from "react-simplemde-editor"; // this is for the editor
+
+const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
+  ssr: false,
+});
 
 // interface IssueForm {
 //   title: string;

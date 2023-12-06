@@ -52,14 +52,17 @@ const IssueForm = ({ issue }: Props) => {
     // the data is an obj and its value is the registered inputs.// like {title: 'bug1', description: 'fix it'}
     // with "api-routes" we write a post-api and with axios we sent a post-request to the my-sql and post(create) the data(title,des) in the db
     try {
-      console.log(issue,"ddd")
+      console.log(issue, "ddd");
       setIsSubmitting(true);
-      if (issue) {// if issue exists => then send a patch(update) request to the server
+      if (issue) {
+        // if issue exists => then send a patch(update) request to the server
         await axios.patch("/api/issues/" + issue.id, data);
-      } else { // if issue dont exists => then send a post request to the server
+      } else {
+        // if issue dont exists => then send a post request to the server
         await axios.post("/api/issues", data); // see the POST-methid in the api/issues/route.ts file
       }
       router.push("/issues");
+      router.refresh(); // this will tell to nextjs to refresh the content of this page
     } catch (error) {
       setIsSubmitting(false);
       // this error is for server-side validation errors

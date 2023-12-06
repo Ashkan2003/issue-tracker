@@ -6,9 +6,9 @@
 // npm install --save react-simplemde-editor easymde // this is for the editor
 // npm i react-hook-form@7.46.1
 // npm i axios // to handle http-request
-// npm i @hookform/resolvers@3.3.1 // this package allows hookform to integrait with so many data-validation-library like "zod" 
+// npm i @hookform/resolvers@3.3.1 // this package allows hookform to integrait with so many data-validation-library like "zod"
 // npm i react-loading-skeleton@3.3.1// this pachage make a beutifull skeleton in the loading-state // this is a common use in real-world applications
-//  npm i delay // this package use is only in development-mode// we use this packege to see a delay in project  
+//  npm i delay // this package use is only in development-mode// we use this packege to see a delay in project
 // npm i react-markdown@8.0.7 //React component to render markdown.
 // npm install -D @tailwindcss/typography // Beautiful typographic defaults for HTML you don't control.The official Tailwind CSS Typography plugin provides a set of prose classes you can use to add beautiful typographic defaults to any vanilla HTML you don’t control, like HTML rendered from Markdown, or pulled from a CMS.
 // npm i @radix-ui/react-icons
@@ -16,7 +16,7 @@ import "@radix-ui/themes/styles.css";
 
 import "./theme-config.css";
 import "./globals.css";
-import { Theme, ThemePanel } from "@radix-ui/themes";
+import { Container, Theme, ThemePanel } from "@radix-ui/themes";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavBar from "./NavBar";
@@ -39,9 +39,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.variable}>
-        <Theme  accentColor="violet">
+        <Theme accentColor="violet">
           <NavBar />
-          <main className="p-5">{children}</main>
+          <main className="p-5">
+            <Container>{children}</Container>
+          </main>
         </Theme>
       </body>
     </html>

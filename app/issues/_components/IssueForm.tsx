@@ -10,14 +10,10 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { AiFillInfoCircle } from "react-icons/ai";
 import { z } from "zod";
-import dynamic from "next/dynamic";
 import "easymde/dist/easymde.min.css"; // this is for the editor
 import { Issue } from "@prisma/client";
-// import SimpleMDE from "react-simplemde-editor"; // this is for the editor
+import SimpleMDE from "react-simplemde-editor"; // this is for the editor
 
-const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
-  ssr: false,
-});
 
 // interface IssueFormData {
 //   title: string;

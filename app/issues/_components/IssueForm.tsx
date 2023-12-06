@@ -1,7 +1,7 @@
 "use client";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
-import { createIssueSchema } from "@/app/validationSchemas";
+import { issueSchema } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Callout, TextField } from "@radix-ui/themes";
 import axios from "axios";
@@ -24,7 +24,7 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
 //   description: string;
 // }
 
-type IssueFormData = z.infer<typeof createIssueSchema>; // we give the useForm-hook a type based on custom-zod-schema // so we get "createIssueSchema" and infer the type of it and place in "IssueFormData" and give it to useForm
+type IssueFormData = z.infer<typeof issueSchema>; // we give the useForm-hook a type based on custom-zod-schema // so we get "createIssueSchema" and infer the type of it and place in "IssueFormData" and give it to useForm
 
 interface Props {
   issue?: Issue; //with ? we make issue optional// this Issue-type is generated from prisma-client
@@ -42,7 +42,7 @@ const IssueForm = ({ issue }: Props) => {
     handleSubmit,
     formState: { errors }, // this error is for client side validation error
   } = useForm<IssueFormData>({
-    resolver: zodResolver(createIssueSchema), // this code allows hookform to integrait with so many data-validation-library like "zod"
+    resolver: zodResolver(issueSchema), // this code allows hookform to integrait with so many data-validation-library like "zod"
   });
 
   const [error, setError] = useState(""); // this error is for server-side validation error

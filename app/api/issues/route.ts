@@ -3,13 +3,13 @@
 // status:201 // ok // a new obj was created
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
-import { createIssueSchema } from "../../validationSchemas";
+import { issueSchema } from "../../validationSchemas";
 
-
+// this is an api for creating an issue
 export async function POST(request: NextRequest) {
   const body = await request.json(); // this return a promise so we store-await it in body
   // we expect that the body have title and description,so then validate them
-  const validation = createIssueSchema.safeParse(body); // if the body have the title and description with the "createIssueSchema" format the success is true otherwise false
+  const validation = issueSchema.safeParse(body); // if the body have the title and description with the "createIssueSchema" format the success is true otherwise false
 
   if (!validation.success)
     // if the validation.success was false then throw a 400 error in response

@@ -30,9 +30,9 @@ interface Props {
   issue?: Issue; //with ? we make issue optional// this Issue-type is generated from prisma-client
 }
 
-
 //we used this component in two places // 1)in the "NewIssuePage"-file to create a new issue //2) in the "EditIssuePage"-file for edtiting the issue
-// so we need the issue it self by its id but becuase we what this component into two places we make issue => optoinal 
+// so if issue exists => then we use this component to update an issue
+//  if issue dont exists => then we use this component to create an issue
 const IssueForm = ({ issue }: Props) => {
   const router = useRouter(); //we navigate with useRouter-function
 
@@ -52,8 +52,13 @@ const IssueForm = ({ issue }: Props) => {
     // the data is an obj and its value is the registered inputs.// like {title: 'bug1', description: 'fix it'}
     // with "api-routes" we write a post-api and with axios we sent a post-request to the my-sql and post(create) the data(title,des) in the db
     try {
+      console.log(issue,"ddd")
       setIsSubmitting(true);
-      await axios.post("/api/issues", data); // see the POST-methid in the api/issues/route.ts file
+      if (issue) {// if issue exists => then send a patch(update) request to the server
+        await axios.patch("/api/issues/" + issue.id, data);
+      } else { // if issue dont exists => then send a post request to the server
+        await axios.post("/api/issues", data); // see the POST-methid in the api/issues/route.ts file
+      }
       router.push("/issues");
     } catch (error) {
       setIsSubmitting(false);
@@ -75,7 +80,11 @@ const IssueForm = ({ issue }: Props) => {
       )}
       <form className=" space-y-3" onSubmit={onsubmit}>
         <TextField.Root>
-          <TextField.Input defaultValue={issue?.title} placeholder="Title" {...register("title")} />
+          <TextField.Input
+            defaultValue={issue?.title}
+            placeholder="Title"
+            {...register("title")}
+          />
         </TextField.Root>
 
         <ErrorMessage>{errors.title?.message}</ErrorMessage>
@@ -93,7 +102,8 @@ const IssueForm = ({ issue }: Props) => {
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
 
         <Button disabled={isSubmitting}>
-          Submit New Issue{isSubmitting && <Spinner />}
+          {issue ? "Update Issue" : "Submit New Issue"}{" "}
+          {isSubmitting && <Spinner />}
         </Button>
       </form>
     </div>

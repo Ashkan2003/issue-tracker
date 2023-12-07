@@ -11,7 +11,7 @@ const EditIssueButton = ({ issueId }: Props) => {
   return (
     <Button>
       <Pencil2Icon />
-      <Link href={`/issues/${issueId}/edit`}>Edit issue</Link>
+      <Link href={`/issues/edit/${issueId}`}>Edit issue</Link>
     </Button>
   );
 };

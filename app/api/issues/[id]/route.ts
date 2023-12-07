@@ -2,6 +2,7 @@ import { issueSchema } from "@/app/validationSchemas";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
 
+
 // interface Props {
 //   params: { params: { id: string } };
 // }
@@ -44,11 +45,14 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } } // get the issue-id from params
 ) {
-  const issue = await prisma.issue.findUnique({ // find the equel issue with its id
+  
+  const issue = await prisma.issue.findUnique({
+    // find the equel issue with its id
     where: { id: parseInt(params.id) },
   });
 
-  if (!issue) // if the issue doesnt exists then return a 404 error
+  if (!issue)
+    // if the issue doesnt exists then return a 404 error
     return NextResponse.json({ error: "Invalid issue" }, { status: 404 });
 
   // then delete the issue from the db
@@ -57,5 +61,5 @@ export async function DELETE(
   });
 
   // return a empty obj for the responbse beacuse this is a delete api
-  return NextResponse.json({})
+  return NextResponse.json({});
 }

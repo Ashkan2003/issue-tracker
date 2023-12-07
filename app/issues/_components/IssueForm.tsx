@@ -57,7 +57,7 @@ const IssueForm = ({ issue }: Props) => {
         // if issue dont exists => then send a post request to the server
         await axios.post("/api/issues", data); // see the POST-methid in the api/issues/route.ts file
       }
-      router.push("/issues");
+      router.push("/issues/list");
       router.refresh(); // this will tell to nextjs to refresh the content of this page
     } catch (error) {
       setIsSubmitting(false);

@@ -12,6 +12,7 @@
 // npm i react-markdown@8.0.7 //React component to render markdown.
 // npm install -D @tailwindcss/typography // Beautiful typographic defaults for HTML you don't control.The official Tailwind CSS Typography plugin provides a set of prose classes you can use to add beautiful typographic defaults to any vanilla HTML you don’t control, like HTML rendered from Markdown, or pulled from a CMS.
 // npm i @radix-ui/react-icons
+// npm install next-auth
 import "@radix-ui/themes/styles.css";
 
 import "./theme-config.css";

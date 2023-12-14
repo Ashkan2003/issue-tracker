@@ -9,10 +9,11 @@ import {
   Avatar,
   Box,
   Container,
-  DropdownMenu,
+  // DropdownMenu,
   Flex,
   Text,
 } from "@radix-ui/themes";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 const NavBar = () => {
   const currentPath = usePathname(); //Get the current pathname
   const { status, data: session } = useSession();
@@ -22,6 +23,7 @@ const NavBar = () => {
     { lable: "Issues", href: "/issues/list" },
   ];
 
+  console.log(session?.user);
   return (
     <nav className="border-b px-5  mb-5 py-3">
       <Container>
@@ -53,21 +55,22 @@ const NavBar = () => {
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger>
                   <Avatar
-                    src={session.user!.image!}
-                    fallback="?"
-                    size="2"
+                    src={session!.user!.image!}
+                    fallback="A"
+                    size="3"
                     radius="full"
                     className="cursor-pointer"
+                    referrerPolicy="no-referrer"
                   />
-                  <DropdownMenu.Content>
-                    <DropdownMenu.Label>
-                      <Text size="2">{session.user!.email}</Text>
-                    </DropdownMenu.Label>
-                    <DropdownMenu.Item>
-                      <Link href="/api/auth/signout">Log out</Link>
-                    </DropdownMenu.Item>
-                  </DropdownMenu.Content>
                 </DropdownMenu.Trigger>
+                <DropdownMenu.Content className="min-w-[220px] bg-white rounded-md p-[5px] shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=top]:animate-slideDownAndFade data-[side=right]:animate-slideLeftAndFade data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade">
+                  <DropdownMenu.Label>
+                    <Text size="2">{session.user!.email}</Text>
+                  </DropdownMenu.Label>
+                  <DropdownMenu.Item>
+                    <Link href="/api/auth/signout">Log out</Link>
+                  </DropdownMenu.Item>
+                </DropdownMenu.Content>
               </DropdownMenu.Root>
             )}
             {status === "unauthenticated" && (

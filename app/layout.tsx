@@ -14,6 +14,7 @@
 // npm i @radix-ui/react-icons
 // npm install next-auth
 //  npm i @next-auth/prisma-adapter@1.0.7
+//npm i bcrypt //npm i --save-dev @types/bcrypt
 import "@radix-ui/themes/styles.css";
 
 import "./theme-config.css";
@@ -43,6 +44,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.variable}>
         <AuthProvider>
+          {/* the  AuthProvider is like a context api to Authenicate the user in entire app*/}
           <Theme accentColor="violet">
             <NavBar />
             <main className="p-5">

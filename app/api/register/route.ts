@@ -4,6 +4,7 @@ import { z } from "zod";
 import bcrypt from "bcrypt";
 
 const schema = z.object({
+  name: z.string(),
   email: z.string().email(),
   password: z.string().min(5),
 });
@@ -31,19 +32,21 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+  
 
     const hashedPassword = await bcrypt.hash(body.password, 10);
 
     const newUser = await prisma.user.create({
       // set these new datas in the user-table
       data: {
+        name: body.name,
         email: body.email,
         hashedPassword,
       },
+      
     });
 
     return NextResponse.json({ email: newUser.email });
-  
   } catch (error: any) {
     return new NextResponse(
       JSON.stringify({

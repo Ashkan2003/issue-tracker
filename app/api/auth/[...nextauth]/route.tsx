@@ -11,6 +11,13 @@ export const authOptions: NextAuthOptions = {
   // If you return null then an error will be displayed advising the user to check their details.
   // If you throw an Error, the user will be sent to the error page with the error message as a query parameter.
   adapter: PrismaAdapter(prisma),
+  session: { 
+    strategy: "jwt",
+    // maxAge:6 // per-second 
+  },
+  pages:{//Specify URLs to be used if you want to create custom sign in, sign out and error pages. Pages specified will override the corresponding built-in page.
+    signIn:"/login"
+  },
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. "Sign in with...")
@@ -50,7 +57,6 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  session: { strategy: "jwt" },
 };
 
 const handler = NextAuth(authOptions);

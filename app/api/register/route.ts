@@ -9,7 +9,7 @@ const schema = z.object({
   password: z.string().min(5),
 });
 
-// this post-resquet is for sign up the user
+// this post-resquet is for sign up the user (register)
 export async function POST(request: NextRequest) {
   // post the new user email and password in the database
   try {

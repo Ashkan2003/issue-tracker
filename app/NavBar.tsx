@@ -14,16 +14,8 @@ import {
   Text,
 } from "@radix-ui/themes";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+
 const NavBar = () => {
-  const currentPath = usePathname(); //Get the current pathname
-  const { status, data: session } = useSession();
-
-  const links = [
-    { lable: "Dashboard", href: "/" },
-    { lable: "Issues", href: "/issues/list" },
-  ];
-
-  console.log(session?.user);
   return (
     <nav className="border-b px-5  mb-5 py-3">
       <Container>
@@ -32,54 +24,77 @@ const NavBar = () => {
             <Link href="/">
               <AiFillBug />
             </Link>
-            <ul className="flex space-x-6">
-              {links.map((link) => (
-                <li key={link.lable}>
-                  <Link
-                    className={classNames({
-                      // "class-name" : true or fulse //true= the class will always rendered // false= the condithon if is false then the claass does not applyes
-                      "text-zinc-900": link.href === currentPath,
-                      "text-zinc-500": link.href !== currentPath,
-                      "hover:text-zinc-800 transition-colors": true,
-                    })}
-                    href={link.href}
-                  >
-                    {link.lable}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <NavLinks />
           </Flex>
-          <Box>
-            {status === "authenticated" && (
-              <DropdownMenu.Root>
-                <DropdownMenu.Trigger>
-                  <Avatar
-                    src={session!.user!.image!}
-                    fallback="A"
-                    size="3"
-                    radius="full"
-                    className="cursor-pointer"
-                    referrerPolicy="no-referrer"
-                  />
-                </DropdownMenu.Trigger>
-                <DropdownMenu.Content className="min-w-[220px] bg-white rounded-md p-[5px] shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=top]:animate-slideDownAndFade data-[side=right]:animate-slideLeftAndFade data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade">
-                  <DropdownMenu.Label>
-                    <Text size="2">{session.user!.email}</Text>
-                  </DropdownMenu.Label>
-                  <DropdownMenu.Item>
-                    <Link href="/api/auth/signout">Log out</Link>
-                  </DropdownMenu.Item>
-                </DropdownMenu.Content>
-              </DropdownMenu.Root>
-            )}
-            {status === "unauthenticated" && (
-              <Link href="/api/auth/signin">Log in</Link>
-            )}
-          </Box>
+          <AuthStatus />
         </Flex>
       </Container>
     </nav>
+  );
+};
+
+const NavLinks = () => {
+  // this component is for rendering the navbar-links
+  const currentPath = usePathname(); //Get the current pathname
+
+  const links = [
+    { lable: "Dashboard", href: "/" },
+    { lable: "Issues", href: "/issues/list" },
+  ];
+
+  return (
+    <ul className="flex space-x-6">
+      {links.map((link) => (
+        <li key={link.lable}>
+          <Link
+            className={classNames({
+              // "class-name" : true or fulse //true= the class will always rendered // false= the condithon if is false then the claass does not applyes
+              "nav-link": true, // the "nav-link" class defined in globals.css-file
+              "!text-zinc-900": link.href === currentPath,
+            })}
+            href={link.href}
+          >
+            {link.lable}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+const AuthStatus = () => {
+  // this component is for rendering the Auth-state of the user in the navbar such as login, signup, logout and user-avatar
+  const { status, data: session } = useSession();
+
+  if (status === "loading") return null;
+
+  if (status === "unauthenticated")
+    return <Link className="nav-link" href="/api/auth/signin">Log in</Link>;
+
+  // so if the status is not "loading" and "unauthenticated" it means that it is "authenticated" so render this
+  return (
+    <Box>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger>
+          <Avatar
+            src={session!.user!.image!}
+            fallback="A"
+            size="3"
+            radius="full"
+            className="cursor-pointer"
+            referrerPolicy="no-referrer"
+          />
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content className="min-w-[220px] bg-white rounded-md p-[5px] shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=top]:animate-slideDownAndFade data-[side=right]:animate-slideLeftAndFade data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade">
+          <DropdownMenu.Label>
+            <Text size="2">{session!.user!.email}</Text>
+          </DropdownMenu.Label>
+          <DropdownMenu.Item>
+            <Link href="/api/auth/signout">Log out</Link>
+          </DropdownMenu.Item>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
+    </Box>
   );
 };
 

@@ -1,4 +1,5 @@
 "use client";
+// import {Skeleton} from "@/app/components"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -14,6 +15,7 @@ import {
   Text,
 } from "@radix-ui/themes";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import Skeleton from "react-loading-skeleton";
 
 const NavBar = () => {
   return (
@@ -66,7 +68,7 @@ const AuthStatus = () => {
   // this component is for rendering the Auth-state of the user in the navbar such as login, signup, logout and user-avatar
   const { status, data: session } = useSession();
 
-  if (status === "loading") return null;
+  if (status === "loading") return <Skeleton width="3rem"/>;
 
   if (status === "unauthenticated")
     return <Link className="nav-link" href="/api/auth/signin">Log in</Link>;

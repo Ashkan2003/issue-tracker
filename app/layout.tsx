@@ -15,6 +15,7 @@
 // npm install next-auth
 //  npm i @next-auth/prisma-adapter@1.0.7
 //npm i bcrypt //npm i --save-dev @types/bcrypt
+//npm i @tanstack/react-query@4.35.3
 import "@radix-ui/themes/styles.css";
 
 import "./theme-config.css";
@@ -24,6 +25,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavBar from "./NavBar";
 import AuthProvider from "./auth/Provider";
+import QueryClientProvider from "./QueryClientProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -43,15 +45,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.variable}>
-        <AuthProvider>
-          {/* the  AuthProvider is like a context api to Authenicate the user in entire app*/}
-          <Theme accentColor="violet">
-            <NavBar />
-            <main className="p-5">
-              <Container>{children}</Container>
-            </main>
-          </Theme>
-        </AuthProvider>
+        <QueryClientProvider>
+          <AuthProvider>
+            {/* the  AuthProvider is like a context api to Authenicate the user in entire app*/}
+            <Theme accentColor="violet">
+              <NavBar />
+              <main className="p-5">
+                <Container>{children}</Container>
+              </main>
+            </Theme>
+          </AuthProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );

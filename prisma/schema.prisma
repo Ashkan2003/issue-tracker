@@ -14,15 +14,17 @@ datasource db {
 model Issue {
   // name type
   // @id // this means that this value its an id
-  // @default // this means that this feild can be not-valued and have the db gives them a data
+  // @default // this means that this feild can have a defaul value
   // autoincrement() // evry time a new record assien to db this assien s new value
   // @db // this used for assien a native-db-type to this field
-  id          Int      @id @default(autoincrement())
-  title       String   @db.VarChar(255) // the default prisma-String-type is varchar(155) but we need to store more chars so we set the varchar to 255
-  description String   @db.Text // the default prisma-String-type is varchar(155) but we need to store more chars so we set to text
-  status      Status   @default(OPEN)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt // with @updatedAt evry time an issue gets updated then this field update
+  id               Int      @id @default(autoincrement())
+  title            String   @db.VarChar(255) // the default prisma-String-type is varchar(155) but we need to store more chars so we set the varchar to 255
+  description      String   @db.Text // the default prisma-String-type is varchar(155) but we need to store more chars so we set to text
+  status           Status   @default(OPEN)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt // with @updatedAt evry time an issue gets updated then this field update
+  assignedToUserId String?  @db.VarChar(255)
+  assignedToUser   User?    @relation(fields: [assignedToUserId], references: [id])
 }
 
 enum Status {
@@ -67,6 +69,7 @@ model User {
   image          String?
   accounts       Account[]
   sessions       Session[]
+  assignedIssues Issue[]
 }
 
 model VerificationToken {

@@ -25,13 +25,17 @@ const IssueDetailPage = async ({ params }: Props) => {
       <Box className="md:col-span-4">
         <IssueDetails issue={issue} />
       </Box>
-     {session && <Box>
-        <Flex direction="column" gap="4">
-          <AssigneeSelect/>
-          <EditIssueButton issueId={issue.id} />
-          <DeleteIssueButton issueId={issue.id} />
-        </Flex>
-      </Box>}
+      {/* if the session was true(exist) so the user exists so render these component */}
+      {/* if the session was false(not-exist) so the user not loged in so dont render these component */}
+      {session && (
+        <Box>
+          <Flex direction="column" gap="4">
+            <AssigneeSelect issue={issue} />
+            <EditIssueButton issueId={issue.id} />
+            <DeleteIssueButton issueId={issue.id} />
+          </Flex>
+        </Box>
+      )}
     </Grid>
   );
 };

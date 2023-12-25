@@ -16,6 +16,7 @@
 //  npm i @next-auth/prisma-adapter@1.0.7
 //npm i bcrypt //npm i --save-dev @types/bcrypt
 //npm i @tanstack/react-query@4.35.3
+//npm i react-hot-toast@2.4.1
 import "@radix-ui/themes/styles.css";
 
 import "./theme-config.css";

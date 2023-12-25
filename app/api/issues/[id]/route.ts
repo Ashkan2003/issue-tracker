@@ -1,4 +1,4 @@
-import { issueSchema } from "@/app/validationSchemas";
+import { patchIssueSchema } from "@/app/validationSchemas";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
 import { getServerSession } from "next-auth";
@@ -17,18 +17,27 @@ export async function PATCH(
   // so we get the user-Auth-state from the getServerSettion and if there is no session(its means that the user doesent loged in) so return a 401 error
   // 401 : unAutorise
   // if you try to send a request from the postman it faild
-
   const session = await getServerSession(authOptions); // we use getServerSession-hook fot geting user Auth-state in server components
   if (!session) return NextResponse.json({}, { status: 401 });
 
   //
   const body = await request.json();
-
-  const validation = issueSchema.safeParse(body); // validate the body with zod
+  const validation = patchIssueSchema.safeParse(body); // validate the body with zod
 
   if (!validation.success)
     // if the validation falied retunr 400
     return NextResponse.json(validation.error.format(), { status: 400 });
+
+  //
+  const { assignedToUserId, title, description } = body; // destructor the values from body
+  if (assignedToUserId) {
+    const user = await prisma.user.findUnique({
+      where: { id: body.assignedToUserId },
+    });
+    if (!user)
+      return NextResponse.json({ error: "Invalid user" }, { status: 400 });
+  }
+
   // ------------------------------------
   const issue = await prisma.issue.findUnique({
     // find the equal issue by its id
@@ -42,8 +51,9 @@ export async function PATCH(
     // if every thing was right then update the issue
     where: { id: issue.id },
     data: {
-      title: body.title,
-      description: body.description,
+      title: title,
+      description: description,
+      assignedToUserId: assignedToUserId,
     },
   });
 

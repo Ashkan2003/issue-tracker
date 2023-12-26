@@ -3,9 +3,24 @@ import { Table } from "@radix-ui/themes";
 import IssueStatusBadge from "../../components/IssueStatusBadge";
 import Link from "../../components/Link";
 import IssueActions from "./IssueActions";
+import { Status } from "@prisma/client";
 
-const IssuesPage = async () => {
-  const issues = await prisma.issue.findMany(); // get all the issues from the db// const issues is an array of obj
+interface Props {
+  searchParams: { status: Status };
+}
+
+const IssuesPage = async ({ searchParams }: Props) => {
+  // we want to validate the search-params.its not nessesery but if a user type a serach-param it self in the url then we get an error
+  const statuses = Object.values(Status); //statuses is an array of 3-values =>["OPEN","IN_PROGRESS","CLOSED"] //Object.value Returns an array of values of the enumerable properties of an object
+  const status = statuses.includes(searchParams.status)
+    ? searchParams.status // if the searchParams.status was it the statuses-array put searchParams.status in the status
+    : undefined; // if the searchParams.status was not in the statuses-array put undefind in the status // prisma will render all of the issues if the "where"-value was undefind
+
+  // get the filtered issues from the db// const issues is an array of obj
+  const issues = await prisma.issue.findMany({
+    where: { status: status },
+  });
+
   return (
     <div>
       <IssueActions />

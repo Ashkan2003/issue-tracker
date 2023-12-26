@@ -1,3 +1,5 @@
+// this page has the logic of implementing filtering and sorthing
+
 import prisma from "@/prisma/client";
 import { Table } from "@radix-ui/themes";
 import IssueStatusBadge from "../../components/IssueStatusBadge";
@@ -20,15 +22,23 @@ const IssuesPage = async ({ searchParams }: Props) => {
     { label: "Created", value: "createdAt", className: "hidden md:table-cell" },
   ];
 
-  // we want to validate the search-params.its not nessesery but if a user type a serach-param it self in the url then we get an error
+  //filtering section // we want to validate the search-params.its not nessesery but if a user type a serach-param it self in the url then we get an error
   const statuses = Object.values(Status); //statuses is an array of 3-values =>["OPEN","IN_PROGRESS","CLOSED"] //Object.value Returns an array of values of the enumerable properties of an object
   const status = statuses.includes(searchParams.status)
     ? searchParams.status // if the searchParams.status was it the statuses-array put searchParams.status in the status
     : undefined; // if the searchParams.status was not in the statuses-array put undefind in the status // prisma will render all of the issues if the "where"-value was undefind
 
+  //sorthing section// we want to validate the search-params.its not nessesery but if a user type a serach-param it self in the url then we get an error
+  const orderby = columns
+    .map((column) => column.value)
+    .includes(searchParams.orderBy)
+    ? { [searchParams.orderBy]: "asc" }
+    : undefined;
+
   // get the filtered issues from the db// const issues is an array of obj
   const issues = await prisma.issue.findMany({
-    where: { status: status },
+    where: { status: status }, // filter the issues
+    orderBy: orderby, // sort the issues
   });
 
   return (

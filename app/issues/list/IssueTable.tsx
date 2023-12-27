@@ -8,7 +8,11 @@ import { Issue, Status } from "@prisma/client";
 
 interface Props {
   // the "status" and "orderby" and "page" are the searchPrams query-strings
-  searchParams: { status: Status; orderBy: keyof Issue; page: string };
+  searchParams: {
+    status: Status;
+    orderBy: keyof Issue;
+    page: string;
+  };
   issues: Issue[];
 }
 

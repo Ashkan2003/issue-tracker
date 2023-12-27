@@ -8,7 +8,11 @@ import IssueTable, { columnNames } from "./IssueTable";
 
 interface Props {
   // the "status" and "orderby" and "page" are the searchPrams query-strings
-  searchParams: { status: Status; orderBy: keyof Issue; page: string };
+  searchParams: {
+    status: Status;
+    orderBy: keyof Issue;
+    page: string;
+  };
 }
 
 const IssuesPage = async ({ searchParams }: Props) => {

@@ -7,6 +7,7 @@ import DeleteIssueButton from "./DeleteIssueButton";
 import { getServerSession } from "next-auth";
 import authOptions from "@/app/auth/authOptions";
 import AssigneeSelect from "./AssigneeSelect";
+import { title } from "process";
 interface Props {
   params: { id: string };
 }
@@ -39,5 +40,20 @@ const IssueDetailPage = async ({ params }: Props) => {
     </Grid>
   );
 };
+
+
+//important// this is the metadata of this page. this is for better seo
+// this is the way of implementing dynamic metadata
+export async function generateMetadata({ params }: Props) {
+  // fetch the issue by its id from db
+  const issue = await prisma.issue.findUnique({
+    where: { id: parseInt(params.id) },
+  });
+
+  return {
+    title: issue?.title, // this will shown in the title of the page of site
+    description: "Details of issue" + issue?.id,
+  };
+}
 
 export default IssueDetailPage;

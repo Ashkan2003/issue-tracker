@@ -5,6 +5,7 @@ import { Issue, Status } from "@prisma/client";
 import Pagination from "../_components/Pagination";
 import IssueActions from "./IssueActions";
 import IssueTable, { columnNames } from "./IssueTable";
+import { Metadata } from "next";
 
 interface Props {
   // the "status" and "orderby" and "page" are the searchPrams query-strings
@@ -55,5 +56,11 @@ const IssuesPage = async ({ searchParams }: Props) => {
 };
 
 export const dynamic = "force-dynamic";
+
+//important// this is the metadata of this page. this is for better seo
+export const metadata: Metadata = {
+  title: "Issue Tracker - Issue List", // this will shown in the title of the page of site
+  description: "View all project issues",
+};
 
 export default IssuesPage;

@@ -17,6 +17,7 @@
 //npm i bcrypt //npm i --save-dev @types/bcrypt
 //npm i @tanstack/react-query@4.35.3
 //npm i react-hot-toast@2.4.1
+// npm i recharts@2.8.0
 import "@radix-ui/themes/styles.css";
 
 import "./theme-config.css";

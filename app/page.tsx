@@ -1,3 +1,4 @@
+import IssueChart from "./IssueChart";
 import IssueSummary from "./IssueSummary";
 import LatestIssues from "./LatestIssues";
 import Pagination from "./issues/_components/Pagination";
@@ -10,6 +11,6 @@ export default async function Home() {
 
   return (
     // <LatestIssues/>
-    <IssueSummary open={open} inProgress={inProgress} closed={closed} />
+    <IssueChart open={open} inProgress={inProgress} closed={closed} />
   );
 }

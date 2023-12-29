@@ -36,8 +36,13 @@ export const RegisterForm = () => {
         return;
       }
 
-      // signIn(undefined, { callbackUrl: "/" });
-      signIn("credentials", { redirect: false });
+      await signIn("credentials", { redirect: false });
+      // i fix signup issue by adding this line of code
+      await signIn("credentials", {
+        redirect: false,
+        email: formValues.email,
+        password: formValues.password,
+      });
       router.push("/");
       console.log("pppd");
     } catch (error: any) {

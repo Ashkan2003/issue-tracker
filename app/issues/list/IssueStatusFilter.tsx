@@ -15,7 +15,6 @@ const statuses: { label: string; value?: Status }[] = [
 const IssueStatusFilter = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  console.log(searchParams, "fff");
   return (
     <Select.Root
       defaultValue={searchParams.get("status") || ""}

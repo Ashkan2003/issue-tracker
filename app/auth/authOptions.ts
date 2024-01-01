@@ -46,7 +46,6 @@ const authOptions: NextAuthOptions = {
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         });
-        console.log(user, "ppppp");
 
         if (!user) return null;
 

@@ -67,7 +67,7 @@ const NavLinks = () => {
 const AuthStatus = () => {
   // this component is for rendering the Auth-state of the user in the navbar such as login, signup, logout and user-avatar
   const { status, data: session } = useSession(); // the useSession hook is for geting user  authstatus in the client
-
+  
   if (status === "loading") return <Skeleton width="3rem" height="2.3rem"/>;
 
   if (status === "unauthenticated")

@@ -32,7 +32,6 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-  
 
     const hashedPassword = await bcrypt.hash(body.password, 10);
 
@@ -43,7 +42,6 @@ export async function POST(request: NextRequest) {
         email: body.email,
         hashedPassword,
       },
-      
     });
 
     return NextResponse.json({ email: newUser.email });

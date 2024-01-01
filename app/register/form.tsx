@@ -44,7 +44,7 @@ export const RegisterForm = () => {
         password: formValues.password,
       });
       router.push("/");
-      console.log("pppd");
+     
     } catch (error: any) {
       setLoading(false);
       setError(error);

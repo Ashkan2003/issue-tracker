@@ -62,7 +62,7 @@ const IssueForm = ({ issue }: Props) => {
     } catch (error) {
       setIsSubmitting(false);
       // this error is for server-side validation errors
-      console.log(error, "dd");
+      console.log(error);
       setError("An unexpected error occured");
     }
   });

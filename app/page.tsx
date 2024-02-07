@@ -19,13 +19,13 @@ export default async function Home() {
         <IssueSummary open={open} closed={closed} inProgress={inProgress} />
         <IssueChart open={open} closed={closed} inProgress={inProgress} />
       </Flex>
-      <LatestIssues/>
+      <LatestIssues />
     </Grid>
   );
 }
 
-//important// this is the metadata of this page. this is for better seo 
-export const metadata: Metadata={
+//important// this is the metadata of this page. this is for better seo
+export const metadata: Metadata = {
   title: "Issue Tracker - Dashboard",
-  description: "View a summary of project issues"
-}
+  description: "View a summary of project issues",
+};
